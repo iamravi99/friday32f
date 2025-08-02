@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const Stories = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/stories`);
+      setStories(response.data || []);
+    } catch (err) {
+      console.error('Error fetching stories:', err);
+      setError('Failed to load stories. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/stories`)
-      .then(res => {
-        setStories(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching stories:', err);
-        setLoading(false);
-      });
+    fetchData();
   }, []);
 
   const visibleStories = showAll ? stories : stories.slice(0, 6);
@@ -27,7 +36,13 @@ const Stories = () => {
         <h1 className="text-4xl font-bold text-pink-500 mb-6 border-b-2 border-pink-700 inline-block pb-2">📖 Bold Stories</h1>
 
         {loading ? (
-          <p>Loading...</p>
+          <LoadingSpinner />
+        ) : error ? (
+          <ErrorMessage message={error} onRetry={fetchData} />
+        ) : stories.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-400 text-xl">No stories available yet.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {visibleStories.map(story => (

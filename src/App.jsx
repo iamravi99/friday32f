@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary';
 import AgeCheckModal from './Comp/AgeCheckModal';
 import Home from './Comp/Home/Home';
 import NewWeb from './Comp/NewWeb';
@@ -22,7 +22,7 @@ import StoriesManager from './admin/StoriesManager';
 import UlluActressManager from './admin/UlluActressManager';
 import DesiLeaksManager from './admin/DesiLeaksManager';
 import ViralManager from './admin/ViralManager';
-import NotFound from './components/NotFound';
+import NotFound from '../components/NotFound';
 
 
 function App() {
