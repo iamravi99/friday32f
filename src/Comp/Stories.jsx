@@ -1,8 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import ErrorMessage from '../../components/ErrorMessage';
+// Simple loading component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center py-20">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+    <span className="ml-3 text-white">Loading...</span>
+  </div>
+);
+
+// Simple error component
+const ErrorMessage = ({ message, onRetry }) => (
+  <div className="text-center py-20">
+    <div className="text-red-500 text-xl mb-4">⚠️ {message}</div>
+    {onRetry && (
+      <button 
+        onClick={onRetry}
+        className="bg-pink-600 text-white px-6 py-2 rounded hover:bg-pink-700"
+      >
+        Try Again
+      </button>
+    )}
+  </div>
+);
 
 const Stories = () => {
   const [stories, setStories] = useState([]);
