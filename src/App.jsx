@@ -65,7 +65,7 @@ function App() {
 
 
  <Route path="/viral" element={<Viral />} />
-          <Route path="viral/:id" element={<ViralDetail />} />
+          <Route path="/viral/:id" element={<ViralDetail />} />
 
 
 

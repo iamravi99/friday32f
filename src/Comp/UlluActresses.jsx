@@ -8,7 +8,7 @@ const UlluActresses = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/actresses') // ✅ Update this if your route is different
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/actresses`)
       .then(res => {
         setActressData(res.data);
         setLoading(false);
@@ -36,7 +36,7 @@ const UlluActresses = () => {
               <Link to={`/actress/${item._id}`} key={item._id}>
                 <div className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg hover:shadow-pink-600 transition duration-300">
                   <img
-                    src={item.image}
+                    src={item.images && item.images.length > 0 ? item.images[0].url : item.image || 'https://via.placeholder.com/300x200'}
                     alt={item.name}
                     className="w-full h-48 object-cover"
                   />

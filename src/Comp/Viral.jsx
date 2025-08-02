@@ -8,7 +8,7 @@ const Viral = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/viral') // ⚠️ This should match your backend route
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/viral`)
       .then(res => {
         setViralData(res.data);
         setLoading(false);
@@ -36,7 +36,7 @@ const Viral = () => {
               <Link to={`/viral/${item._id}`} key={item._id}>
                 <div className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg hover:shadow-yellow-500 transition duration-300">
                   <img
-                    src={item.image}
+                    src={item.images && item.images.length > 0 ? item.images[0].url : item.image || 'https://via.placeholder.com/300x200'}
                     alt={item.title}
                     className="w-full h-48 object-cover"
                   />

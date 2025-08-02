@@ -8,7 +8,7 @@ const NewWebDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/webseries/${id}`)
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/webseries/${id}`)
       .then(res => {
         setItem(res.data);
         setLoading(false);
@@ -37,7 +37,7 @@ const NewWebDetail = () => {
       <div className="max-w-4xl mx-auto bg-zinc-900 rounded-xl shadow-lg overflow-hidden">
         <div className="w-full h-[500px] md:h-[600px] overflow-hidden">
           <img
-            src={item.image}
+            src={item.images && item.images.length > 0 ? item.images[0].url : item.image || 'https://via.placeholder.com/600x400'}
             alt={item.title}
             className="w-full h-full object-cover object-center"
           />
