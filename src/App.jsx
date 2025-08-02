@@ -69,34 +69,35 @@ function App() {
 
 
 
-{/* Admin Routes */}
-<Route path="/singh/login" element={<AdminLogin onLogin={setIsAdminAuth} />} />
-{isAdminAuth ? (
-  <>
-    <Route path="/singh" element={<AdminDashboard />} />
-    <Route path="/singh/webseries" element={<WebseriesManager />} />
-    <Route path="/singh/stories" element={<StoriesManager />} />
-    <Route path="/singh/ulluactresses" element={<UlluActressManager />} />
-    <Route path="/singh/desileaks" element={<DesiLeaksManager />} />
-    <Route path="/singh/viral" element={<ViralManager />} />
-  </>
-) : (
-  <Route path="/singh/*" element={<AdminLogin onLogin={setIsAdminAuth} />} />
-)}
-
-
-
-
-
-
-
-
-
-
-
-
-
           </Route>
+          
+          {/* Admin Routes - Outside Layout */}
+          <Route path="/singh/login" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+          {isAdminAuth ? (
+            <>
+              <Route path="/singh" element={<AdminDashboard />} />
+              <Route path="/singh/webseries" element={<WebseriesManager />} />
+              <Route path="/singh/stories" element={<StoriesManager />} />
+              <Route path="/singh/ulluactresses" element={<UlluActressManager />} />
+              <Route path="/singh/desileaks" element={<DesiLeaksManager />} />
+              <Route path="/singh/viral" element={<ViralManager />} />
+            </>
+          ) : (
+            <Route path="/singh/*" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+          )}
+
+
+
+
+
+
+
+
+
+
+
+
+
         </Routes>
       )}
     </BrowserRouter>
