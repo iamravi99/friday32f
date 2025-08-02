@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 const NewWeb = () => {
   const [webData, setWebData] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/webseries`);
+      setWebData(response.data || []);
+    } catch (err) {
+      console.error("Error fetching web data:", err);
+      setError('Failed to load web series. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/webseries`)
-      .then(res => {
-        setWebData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching web data:", err);
-        setLoading(false);
-      });
+    fetchData();
   }, []);
 
   const visibleItems = showAll ? webData : webData.slice(0, 5);
@@ -29,7 +38,13 @@ const NewWeb = () => {
         </h1>
 
         {loading ? (
-          <p className="text-gray-300">Loading...</p>
+          <LoadingSpinner />
+        ) : error ? (
+          <ErrorMessage message={error} onRetry={fetchData} />
+        ) : webData.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-400 text-xl">No web series available yet.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6">
             {visibleItems.map((item) => (

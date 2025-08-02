@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import AgeCheckModal from './Comp/AgeCheckModal'; // ✅ use here
+import ErrorBoundary from './components/ErrorBoundary';
+import AgeCheckModal from './Comp/AgeCheckModal';
 import Home from './Comp/Home/Home';
 import NewWeb from './Comp/NewWeb';
 import NewWebDetail from './Comp/NewWebDetail';
@@ -22,6 +22,7 @@ import StoriesManager from './admin/StoriesManager';
 import UlluActressManager from './admin/UlluActressManager';
 import DesiLeaksManager from './admin/DesiLeaksManager';
 import ViralManager from './admin/ViralManager';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -40,10 +41,11 @@ function App() {
   if (!checked) return null;
 
   return (
-    <BrowserRouter>
-      {!isAllowed && <AgeCheckModal onAccept={() => setIsAllowed(true)} />}
-      {isAllowed && (
-        <Routes>
+    <ErrorBoundary>
+      <BrowserRouter>
+        {!isAllowed && <AgeCheckModal onAccept={() => setIsAllowed(true)} />}
+        {isAllowed && (
+          <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/newweb" element={<NewWeb />} />
@@ -96,10 +98,13 @@ function App() {
 
 
 
+            {/* Catch all route */}
+            <Route path="*" element={<NotFound />} />
           </Route>
-        </Routes>
-      )}
-    </BrowserRouter>
+          </Routes>
+        )}
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 
