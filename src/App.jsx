@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AgeCheckModal from './Comp/AgeCheckModal';
+
+import AgeCheckModal from './Comp/AgeCheckModal'; // ✅ use here
 import Home from './Comp/Home/Home';
 import NewWeb from './Comp/NewWeb';
 import NewWebDetail from './Comp/NewWebDetail';
@@ -21,8 +22,6 @@ import StoriesManager from './admin/StoriesManager';
 import UlluActressManager from './admin/UlluActressManager';
 import DesiLeaksManager from './admin/DesiLeaksManager';
 import ViralManager from './admin/ViralManager';
-import Debug from './debug';
-
 
 
 function App() {
@@ -50,7 +49,6 @@ function App() {
             <Route path="/newweb" element={<NewWeb />} />
             <Route path="/newweb/:id" element={<NewWebDetail />} />
            <Route path="/about" element={<About/>} />
-            <Route path="/debug" element={<Debug />} />
 
 
 <Route path="/ulluactresses" element={<UlluActresses />} />
@@ -71,35 +69,34 @@ function App() {
 
 
 
+{/* Admin Routes */}
+<Route path="/singh/login" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+{isAdminAuth ? (
+  <>
+    <Route path="/singh" element={<AdminDashboard />} />
+    <Route path="/singh/webseries" element={<WebseriesManager />} />
+    <Route path="/singh/stories" element={<StoriesManager />} />
+    <Route path="/singh/ulluactresses" element={<UlluActressManager />} />
+    <Route path="/singh/desileaks" element={<DesiLeaksManager />} />
+    <Route path="/singh/viral" element={<ViralManager />} />
+  </>
+) : (
+  <Route path="/singh/*" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
           </Route>
-          
-          {/* Admin Routes - Outside Layout */}
-          <Route path="/singh/login" element={<AdminLogin onLogin={setIsAdminAuth} />} />
-          {isAdminAuth ? (
-            <>
-              <Route path="/singh" element={<AdminDashboard />} />
-              <Route path="/singh/webseries" element={<WebseriesManager />} />
-              <Route path="/singh/stories" element={<StoriesManager />} />
-              <Route path="/singh/ulluactresses" element={<UlluActressManager />} />
-              <Route path="/singh/desileaks" element={<DesiLeaksManager />} />
-              <Route path="/singh/viral" element={<ViralManager />} />
-            </>
-          ) : (
-            <Route path="/singh/*" element={<AdminLogin onLogin={setIsAdminAuth} />} />
-          )}
-
-
-
-
-
-
-
-
-
-
-
-
-
         </Routes>
       )}
     </BrowserRouter>

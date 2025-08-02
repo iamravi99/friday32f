@@ -1,51 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// Simple loading component
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center py-20">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-    <span className="ml-3 text-white">Loading...</span>
-  </div>
-);
-
-// Simple error component
-const ErrorMessage = ({ message, onRetry }) => (
-  <div className="text-center py-20">
-    <div className="text-red-500 text-xl mb-4">⚠️ {message}</div>
-    {onRetry && (
-      <button 
-        onClick={onRetry}
-        className="bg-pink-600 text-white px-6 py-2 rounded hover:bg-pink-700"
-      >
-        Try Again
-      </button>
-    )}
-  </div>
-);
 
 const NewWeb = () => {
   const [webData, setWebData] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/webseries`);
-      setWebData(response.data || []);
-    } catch (err) {
-      console.error("Error fetching web data:", err);
-      setError('Failed to load web series. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    fetchData();
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/webseries`)
+      .then(res => {
+        setWebData(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching web data:", err);
+        setLoading(false);
+      });
   }, []);
 
   const visibleItems = showAll ? webData : webData.slice(0, 5);
@@ -58,13 +29,7 @@ const NewWeb = () => {
         </h1>
 
         {loading ? (
-          <LoadingSpinner />
-        ) : error ? (
-          <ErrorMessage message={error} onRetry={fetchData} />
-        ) : webData.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-gray-400 text-xl">No web series available yet.</p>
-          </div>
+          <p className="text-gray-300">Loading...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6">
             {visibleItems.map((item) => (
