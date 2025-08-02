@@ -39,7 +39,21 @@ const Home = () => {
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-        <span className="ml-3">Loading...</span>
+        <span className="ml-3">Loading data from MongoDB...</span>
+      </div>
+    );
+  }
+
+  // If no data, show message with API URL for debugging
+  if (webData.length === 0 && stories.length === 0 && actresses.length === 0 && viral.length === 0) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-4">No Data Found</h2>
+          <p className="text-gray-400 mb-2">API URL: {import.meta.env.VITE_API_URL || 'Not Set'}</p>
+          <p className="text-gray-400 mb-4">Check if backend is running and environment variables are set.</p>
+          <a href="/debug" className="bg-pink-600 px-4 py-2 rounded text-white">Debug Page</a>
+        </div>
       </div>
     );
   }

@@ -21,6 +21,7 @@ import StoriesManager from './admin/StoriesManager';
 import UlluActressManager from './admin/UlluActressManager';
 import DesiLeaksManager from './admin/DesiLeaksManager';
 import ViralManager from './admin/ViralManager';
+import Debug from './debug';
 
 
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/newweb" element={<NewWeb />} />
             <Route path="/newweb/:id" element={<NewWebDetail />} />
            <Route path="/about" element={<About/>} />
+            <Route path="/debug" element={<Debug />} />
 
 
 <Route path="/ulluactresses" element={<UlluActresses />} />
