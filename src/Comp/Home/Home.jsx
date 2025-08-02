@@ -1,24 +1,24 @@
 import React from 'react'
 
 import NewWeb from '../NewWeb'
-import Storie from '../Storie'
-import DesiMasala from '../DesiMasala'
-import Ullu from '../Ullu'
-import HotPics from '../HotPics'
-import Banner1 from '../ADS/Banner1'
+import Viral from '../Viral'
+import DesiLeaks from '../DesiLeaks'
+import Stories from '../Stories'
+
+
 
 const Home = () => {
   return (
     <>
     
     
-  <Banner1/>
-    <HotPics/>
-    <NewWeb/>
-    <Storie/>
-    <DesiMasala/>
-    <Ullu/>
+  
     
+    <NewWeb/>
+    <Viral/>
+    <DesiLeaks/>
+    <Stories/>
+<Viral/>
     </>
   )
 }

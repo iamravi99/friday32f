@@ -2,19 +2,19 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const NewWebDetail = () => {
+const DesiLeakDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/webseries/${id}`)
+    axios.get(`http://localhost:5000/api/desileaks/${id}`)
       .then(res => {
         setItem(res.data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Error fetching detail:", err);
+        console.error("Error fetching desi leak detail:", err);
         setLoading(false);
       });
   }, [id]);
@@ -26,8 +26,8 @@ const NewWebDetail = () => {
   if (!item) {
     return (
       <div className="text-white text-center py-20">
-        <h2 className="text-3xl font-bold text-red-500">Oops! Content not found.</h2>
-        <Link to="/newweb" className="text-pink-400 underline mt-4 block">Back to Web List</Link>
+        <h2 className="text-3xl font-bold text-red-500">Leak not found!</h2>
+        <Link to="/desileaks" className="text-pink-400 underline mt-4 block">Back to Leaks</Link>
       </div>
     );
   }
@@ -45,12 +45,12 @@ const NewWebDetail = () => {
 
         <div className="p-6">
           <h1 className="text-4xl font-bold text-pink-500 mb-4">{item.title}</h1>
-          <p className="text-zinc-300 text-lg leading-relaxed">{item.content || item.desc}</p>
-          <Link to="/newweb" className="text-pink-400 underline block mt-6">⬅️ Back to Web List</Link>
+          <p className="text-zinc-300 text-lg leading-relaxed whitespace-pre-line">{item.content || item.desc}</p>
+          <Link to="/desileaks" className="text-pink-400 underline block mt-6">⬅️ Back to All Leaks</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default NewWebDetail;
+export default DesiLeakDetail;

@@ -2,13 +2,13 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const NewWebDetail = () => {
+const ViralDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/webseries/${id}`)
+    axios.get(`http://localhost:5000/api/viral/${id}`)
       .then(res => {
         setItem(res.data);
         setLoading(false);
@@ -19,15 +19,13 @@ const NewWebDetail = () => {
       });
   }, [id]);
 
-  if (loading) {
-    return <p className="text-center text-white py-10">Loading...</p>;
-  }
+  if (loading) return <p className="text-center text-white py-10">Loading...</p>;
 
   if (!item) {
     return (
       <div className="text-white text-center py-20">
         <h2 className="text-3xl font-bold text-red-500">Oops! Content not found.</h2>
-        <Link to="/newweb" className="text-pink-400 underline mt-4 block">Back to Web List</Link>
+        <Link to="/viral" className="text-yellow-400 underline mt-4 block">Back to Viral</Link>
       </div>
     );
   }
@@ -44,13 +42,13 @@ const NewWebDetail = () => {
         </div>
 
         <div className="p-6">
-          <h1 className="text-4xl font-bold text-pink-500 mb-4">{item.title}</h1>
+          <h1 className="text-4xl font-bold text-yellow-400 mb-4">{item.title}</h1>
           <p className="text-zinc-300 text-lg leading-relaxed">{item.content || item.desc}</p>
-          <Link to="/newweb" className="text-pink-400 underline block mt-6">⬅️ Back to Web List</Link>
+          <Link to="/viral" className="text-yellow-400 underline block mt-6">⬅️ Back to Viral</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default NewWebDetail;
+export default ViralDetail;

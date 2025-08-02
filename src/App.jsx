@@ -5,26 +5,35 @@ import AgeCheckModal from './Comp/AgeCheckModal'; // ✅ use here
 import Home from './Comp/Home/Home';
 import NewWeb from './Comp/NewWeb';
 import NewWebDetail from './Comp/NewWebDetail';
-import Storie from './Comp/Storie';
-import StorieDetail from './Comp/StorieDetail';
+import About from './Comp/About'; // Assuming you have an About component
 import Layout from './Layout';
-import HotBhabi from './Comp/HotBhabi';
-import HotBhabiDetail from './Comp/HotBhabiDetail';
-import About from './Comp/About';
-import DesiMasala from './Comp/DesiMasala';
-import DesiMasalaDetail from './Comp/DesiMasalaDetail';
-import Ullu from './Comp/Ullu';
-import UlluDetail from './Comp/UlluDetail';
-import HotPics from './Comp/HotPics';
-import HotPicsDetail from './Comp/HotPicsDetail';
+import UlluActresses from './Comp/UlluActresses';
+import UlluActressDetail from './Comp/UlluActressDetail';
+import Stories from './Comp/Stories';
+import StoryDetail from './Comp/StoryDetail';
+import DesiLeaks from './Comp/DesiLeaks';
+import DesiLeakDetail from './Comp/DesiLeakDetail';
+import Viral from './Comp/Viral';
+import ViralDetail from './Comp/ViralDetail';
+import AdminDashboard from './admin/AdminDashboard';
+import AdminLogin from './admin/AdminLogin';
+import WebseriesManager from './admin/WebseriesManager';
+import StoriesManager from './admin/StoriesManager';
+import UlluActressManager from './admin/UlluActressManager';
+import DesiLeaksManager from './admin/DesiLeaksManager';
+import ViralManager from './admin/ViralManager';
+
 
 function App() {
   const [isAllowed, setIsAllowed] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [isAdminAuth, setIsAdminAuth] = useState(false);
 
   useEffect(() => {
     const isAdult = localStorage.getItem('isAdult');
+    const adminAuth = localStorage.getItem('adminAuth');
     if (isAdult === 'true') setIsAllowed(true);
+    if (adminAuth === 'true') setIsAdminAuth(true);
     setChecked(true);
   }, []);
 
@@ -39,17 +48,54 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/newweb" element={<NewWeb />} />
             <Route path="/newweb/:id" element={<NewWebDetail />} />
-            <Route path="/stories" element={<Storie />} />
-            <Route path="/storie/:id" element={<StorieDetail />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/hotbhabi" element={<HotBhabi />} />
-            <Route path="/hotbhabi/:id" element={<HotBhabiDetail />} />
-            <Route path="/desimasala" element={<DesiMasala />} />
-            <Route path="/desimasala/:id" element={<DesiMasalaDetail />} />
-            <Route path="/ullu" element={<Ullu />} />
-            <Route path="/ullu/:id" element={<UlluDetail />} />
-            <Route path="/hotpics" element={<HotPics />} />
-            <Route path="/hotpics/:id" element={<HotPicsDetail />} />
+           <Route path="/about" element={<About/>} />
+
+
+<Route path="/ulluactresses" element={<UlluActresses />} />
+<Route path="/actress/:id" element={<UlluActressDetail />} />
+
+<Route path="/stories" element={<Stories />} />
+<Route path="/stories/:id" element={<StoryDetail />} />
+<Route path="/desileaks" element={<DesiLeaks />} />
+
+<Route path="/desileaks/:id" element={<DesiLeakDetail />} />
+
+
+
+
+
+ <Route path="/viral" element={<Viral />} />
+          <Route path="viral/:id" element={<ViralDetail />} />
+
+
+
+{/* Admin Routes */}
+<Route path="/singh/login" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+{isAdminAuth ? (
+  <>
+    <Route path="/singh" element={<AdminDashboard />} />
+    <Route path="/singh/webseries" element={<WebseriesManager />} />
+    <Route path="/singh/stories" element={<StoriesManager />} />
+    <Route path="/singh/ulluactresses" element={<UlluActressManager />} />
+    <Route path="/singh/desileaks" element={<DesiLeaksManager />} />
+    <Route path="/singh/viral" element={<ViralManager />} />
+  </>
+) : (
+  <Route path="/singh/*" element={<AdminLogin onLogin={setIsAdminAuth} />} />
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
           </Route>
         </Routes>
       )}

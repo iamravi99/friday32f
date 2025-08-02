@@ -6,7 +6,9 @@ const navItems = [
   { name: 'Home', path: '/' },
   { name: 'New Webseries', path: '/newweb' },
   { name: 'Stories', path: '/stories' },
-  { name: 'Hot Bhabi', path: '/hotbhabi' },
+  { name: 'Desi Leaks', path: '/desileaks' },
+  { name: 'Viral News', path: '/viral' },
+  { name: 'Hot Actresses', path: '/ulluactresses' },
   { name: 'About', path: '/about' },
 ];
 
